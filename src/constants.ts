@@ -1,3 +1,8 @@
+export type TabData = {
+  tuning: string[];
+  data: string[][];
+}
+
 export type IntervalList = number[];
 export type IntervalMap = Record<string, IntervalList>;
 
