@@ -44,34 +44,37 @@ describe('validateTabData', () => {
       ['3', '', '2', ''],
       ['3', '', '2', ''],
       ['1', '', '0', ''],
-    ]
-  }
+    ],
+  };
 
   it('returns true for valid data', () => {
     expect(validateTabData(mockTabData)).toBe(true);
   });
 
   it('returns true for single string input', () => {
-    expect(validateTabData({
-      tuning: ['e'],
-      data: [['1', '3', '5']]
-    })).toBe(true);
+    expect(
+      validateTabData({
+        tuning: ['e'],
+        data: [['1', '3', '5']],
+      })
+    ).toBe(true);
   });
 
   it('detects tuning mismatch', () => {
-    expect(validateTabData({
-      ...mockTabData,
-      tuning: ['b', 'f', 'd']
-    })).toBe(false);
+    expect(
+      validateTabData({
+        ...mockTabData,
+        tuning: ['b', 'f', 'd'],
+      })
+    ).toBe(false);
   });
 
   it('detects string length mismatch', () => {
-    expect(validateTabData({
-      ...mockTabData,
-      data: [
-        ...mockTabData.data.slice(1),
-        ['', '', '', '', '']
-      ]
-    })).toBe(false);
+    expect(
+      validateTabData({
+        ...mockTabData,
+        data: [...mockTabData.data.slice(1), ['', '', '', '', '']],
+      })
+    ).toBe(false);
   });
 });
