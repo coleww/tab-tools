@@ -54,6 +54,14 @@ describe('getNote', () => {
   it('ignores bad root notes', () => {
     expect(getNote('z', '0')).toBe('');
   });
+
+  it('ignores undefined root', () => {
+    expect(getNote(undefined, '0')).toBe('');
+  });
+
+  it('ignores undefined fret', () => {
+    expect(getNote('a', undefined)).toBe('');
+  });
 });
 
 describe('getInterval', () => {
@@ -90,14 +98,14 @@ describe('getTabChords', () => {
           type: 'maj',
         },
       ],
-      undefined,
+      [],
       [
         {
           root: 'e',
           type: 'min',
         },
       ],
-      undefined,
+      [],
     ]);
   });
 });

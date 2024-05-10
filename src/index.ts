@@ -7,8 +7,11 @@ import {
   type TabData,
 } from './constants';
 
-export function getNote(rootNote: string, fret: string) {
-  if (!/\d+/.exec(fret)) {
+export function getNote(
+  rootNote: string | undefined,
+  fret: string | undefined
+) {
+  if (!rootNote || !fret || !/\d+/.exec(fret)) {
     return '';
   }
 
@@ -26,10 +29,10 @@ export function getNote(rootNote: string, fret: string) {
 
   if (rootIndex + targetFret >= ALL_NOTES.length) {
     const remainder = ALL_NOTES.length - rootIndex;
-    return ALL_NOTES[targetFret - remainder];
+    return ALL_NOTES[targetFret - remainder] || '';
   }
 
-  return ALL_NOTES[rootIndex + targetFret];
+  return ALL_NOTES[rootIndex + targetFret] || '';
 }
 
 export function getInterval(rootNote: string, intervalNote: string) {
@@ -53,17 +56,18 @@ export function getChords(notes: string[]) {
   return notes
     .sort()
     .filter((x, i, a) => a.indexOf(x) === i)
-    .map((note, i, arr) => {
+    .map((_, i, arr) => {
       const noteOrder = [...arr.slice(i), ...arr.slice(0, i)];
       const root = noteOrder[0];
+      if (!root) return '';
       const intervalsString = noteOrder
         .slice(1)
         .map(note => getInterval(root, note))
         .toString();
       const chordMatch = Object.keys(CHORD_INTERVALS).find(
-        chordType => intervalsString === CHORD_INTERVALS[chordType].toString()
+        chordType => intervalsString === CHORD_INTERVALS[chordType]?.toString()
       );
-      if (chordMatch) return { root, type: chordMatch };
+      return chordMatch && { root, type: chordMatch };
     })
     .filter((x): x is Chord => !!x);
 }
@@ -71,7 +75,7 @@ export function getChords(notes: string[]) {
 export function getTabChords(tabData: TabData) {
   const { tuning, data } = tabData;
   return data[0]
-    .map((_, fretIdx) =>
+    ?.map((_, fretIdx) =>
       data
         .map((string, stringIdx) => getNote(tuning[stringIdx], string[fretIdx]))
         .filter(x => x)
@@ -91,7 +95,7 @@ export function validateTabData(tabData: TabData) {
 function allArraysAreSameLength(arrays: string[][]) {
   if (arrays.length === 1) return true;
 
-  const firstArrayLength = arrays[0].length;
+  const firstArrayLength = arrays[0]?.length;
   const hasNonMatchingArrayLength = arrays
     .slice(1)
     .some(a => a.length !== firstArrayLength);
@@ -104,7 +108,7 @@ export function getUniqueNotes(tabData: TabData): string[] {
       const rootNote = tabData.tuning[i];
       return bigAcc.concat(
         string.reduce<string[]>((lilAcc, fret) => {
-          if (fret) {
+          if (fret && rootNote) {
             const note = getNote(rootNote, fret);
             if (note) {
               lilAcc.push(note);
@@ -149,7 +153,7 @@ function buildReverseKeyLookup(
     (reverseMap, [key, notes]) => {
       const reverseLookupKey = notes.sort().join('');
       reverseMap[reverseLookupKey] = reverseMap[reverseLookupKey] || [];
-      reverseMap[reverseLookupKey].push(key);
+      reverseMap[reverseLookupKey]?.push(key);
       return reverseMap;
     },
     {}
@@ -162,6 +166,6 @@ export const keyLookup = buildReverseKeyLookup(keyMap);
 export function getPossibleKeys(tabData: TabData) {
   const tabNotes = getUniqueNotes(tabData);
   return Object.keys(keyMap).filter(key => {
-    return tabNotes.every(note => keyMap[key].includes(note));
+    return tabNotes.every(note => keyMap[key]?.includes(note));
   });
 }
