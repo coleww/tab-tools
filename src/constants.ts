@@ -49,6 +49,7 @@ export const ALL_NOTES = [
 
 // make this enforce note literal?
 export type Note = (typeof ALL_NOTES)[number];
+export type ChordType = keyof typeof CHORD_INTERVALS;
 
 export const FLATS_TO_SHARPS: Record<string, Note> = {
   bb: 'a#',
@@ -56,4 +57,9 @@ export const FLATS_TO_SHARPS: Record<string, Note> = {
   eb: 'e#',
   gb: 'f#',
   ab: 'g#',
+};
+
+export type Chord = {
+  root: Note;
+  type: ChordType;
 };

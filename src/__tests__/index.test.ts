@@ -1,4 +1,5 @@
 import {
+  getChords,
   getInterval,
   getNote,
   getPossibleKeys,
@@ -61,6 +62,14 @@ describe('getInterval', () => {
 
   it('gets unison', () => {
     expect(getInterval('g', 'g')).toBe(0);
+  });
+});
+
+describe('getChords', () => {
+  it('matches min chord out of order', () => {
+    expect(getChords(['c', 'a', 'e'])).toStrictEqual([
+      { root: 'a', type: 'min' },
+    ]);
   });
 });
 

@@ -1,7 +1,9 @@
 import {
   ALL_NOTES,
+  CHORD_INTERVALS,
   FLATS_TO_SHARPS,
   KEY_INTERVALS,
+  type Chord,
   type TabData,
 } from './constants';
 
@@ -42,6 +44,29 @@ export function getInterval(rootNote: string, intervalNote: string) {
   }
 
   return interval;
+}
+
+// TODO: can this return multiple?
+export function getChords(notes: string[]) {
+  if (notes.length <= 1) {
+    return;
+  }
+  return notes
+    .sort()
+    .filter((x, i, a) => a.indexOf(x) === i)
+    .map((note, i, arr) => {
+      const noteOrder = [...arr.slice(i), ...arr.slice(0, i)];
+      const root = noteOrder[0];
+      const intervalsString = noteOrder
+        .slice(1)
+        .map(note => getInterval(root, note))
+        .toString();
+      const chordMatch = Object.keys(CHORD_INTERVALS).find(
+        chordType => intervalsString === CHORD_INTERVALS[chordType].toString()
+      );
+      if (chordMatch) return { root, type: chordMatch };
+    })
+    .filter(x => !!x);
 }
 
 export function validateTabData(tabData: TabData) {
