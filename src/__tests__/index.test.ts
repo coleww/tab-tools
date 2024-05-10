@@ -1,4 +1,10 @@
-import { getNote, getUniqueNotes, validateTabData } from '../';
+import {
+  getNote,
+  getUniqueNotes,
+  keyLookup,
+  keyMap,
+  validateTabData,
+} from '../';
 
 describe('getNote', () => {
   it('gets open string', () => {
@@ -91,6 +97,33 @@ describe('getUniqueNotes', () => {
   };
 
   it('returns unique notes for tab data', () => {
-    expect(getUniqueNotes(mockTabData)).toStrictEqual(['a', 'b', 'c', 'e', 'f', 'g#']);
+    expect(getUniqueNotes(mockTabData)).toStrictEqual([
+      'a',
+      'b',
+      'c',
+      'e',
+      'f',
+      'g#',
+    ]);
+  });
+});
+
+describe('keyMap', () => {
+  it('maps keys to note values', () => {
+    expect(keyMap['a min']).toStrictEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+  });
+
+  it('matches snapshot', () => {
+    expect(keyMap).toMatchSnapshot();
+  });
+});
+
+describe('keyLookup', () => {
+  it('maps sorted note string to possible keys', () => {
+    expect(keyLookup['abcdefg']).toStrictEqual(['a min', 'c maj']);
+  });
+
+  it('matches snapshot', () => {
+    expect(keyLookup).toMatchSnapshot();
   });
 });
