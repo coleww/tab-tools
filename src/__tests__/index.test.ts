@@ -3,6 +3,7 @@ import {
   getInterval,
   getNote,
   getPossibleKeys,
+  getTabChords,
   getUniqueNotes,
   keyLookup,
   keyMap,
@@ -76,6 +77,27 @@ describe('getChords', () => {
     expect(getChords(['c#', 'f#', 'g#'])).toStrictEqual([
       { root: 'c#', type: 'sus4' },
       { root: 'f#', type: 'sus2' },
+    ]);
+  });
+});
+
+describe('getTabChords', () => {
+  it('detects chords for each beat', () => {
+    expect(getTabChords(mockTabData)).toStrictEqual([
+      [
+        {
+          root: 'f',
+          type: 'maj',
+        },
+      ],
+      undefined,
+      [
+        {
+          root: 'e',
+          type: 'min',
+        },
+      ],
+      undefined,
     ]);
   });
 });

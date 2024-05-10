@@ -68,6 +68,17 @@ export function getChords(notes: string[]) {
     .filter(x => !!x);
 }
 
+export function getTabChords(tabData: TabData) {
+  const { tuning, data } = tabData;
+  return data[0]
+    .map((_, fretIdx) =>
+      data
+        .map((string, stringIdx) => getNote(tuning[stringIdx], string[fretIdx]))
+        .filter(x => x)
+    )
+    .map(getChords);
+}
+
 export function validateTabData(tabData: TabData) {
   return (
     tabData.tuning.length &&
