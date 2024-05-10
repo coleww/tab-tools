@@ -48,7 +48,7 @@ export function getInterval(rootNote: string, intervalNote: string) {
 
 export function getChords(notes: string[]) {
   if (notes.length <= 1) {
-    return;
+    return [];
   }
   return notes
     .sort()
@@ -65,7 +65,7 @@ export function getChords(notes: string[]) {
       );
       if (chordMatch) return { root, type: chordMatch };
     })
-    .filter(x => !!x);
+    .filter((x): x is Chord => !!x);
 }
 
 export function getTabChords(tabData: TabData) {
