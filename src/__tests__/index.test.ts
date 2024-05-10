@@ -71,6 +71,13 @@ describe('getChords', () => {
       { root: 'a', type: 'min' },
     ]);
   });
+
+  it('detects multiple possibly chords', () => {
+    expect(getChords(['c#', 'f#', 'g#'])).toStrictEqual([
+      { root: 'c#', type: 'sus4' },
+      { root: 'f#', type: 'sus2' },
+    ]);
+  });
 });
 
 describe('validateTabData', () => {
