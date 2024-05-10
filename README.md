@@ -1,7 +1,8 @@
 tab-tools
 ------------
 
-Utilities for working with guitar tabs
+Utilities for working with guitar tabs.
+
 
 ## API
 
@@ -28,16 +29,18 @@ type TabData = {
 }
 ```
 
+See also [tab-parser](https://github.com/coleww/tab-parser/tree/main) for converting guitar tablature to/from this format.
+
 #### validataTabData(tabData: TabData): boolean
 
 Checks that `tuning` and `data` are both present, that `tuning` has the same length as `data`, and that all string arrays in `data` have the same length 
 
 #### getUniqueNotes(tabData: TabData): string[]
 
-Returns a sorted array of all the notes in a given tabData.
+Returns a sorted array of all the notes in the tabData.
 
 ```
-['a', 'b', 'c', 'd', 'e', 'f#', 'g']
+// ['a', 'b', 'c', 'd', 'e', 'f#', 'g']
 ```
 
 #### getPossibleKeys(tabData: TabData): string[]
@@ -45,7 +48,7 @@ Returns a sorted array of all the notes in a given tabData.
 Returns a list of keys that contain all the notes in the tabData.
 
 ```
-['chromatic', 'a min', 'c maj']
+// ['chromatic', 'a min', 'c maj']
 ```
 
 ### Intervals 
@@ -57,13 +60,20 @@ For a given `rootNote` (i.e, 'a', 'c', 'g#') for a string and a `fret` (i.e, '0'
 Note: Will return values using lowercased sharps (`#`) even if input uses upper case and flats (`b`).
 
 ```
-getNote('a', 3)
+getNote('a', '3')
 // 'c'
-getNote('e', 13)
+getNote('e', '13')
 // 'f'
-getNote('Gb', 0)
+getNote('Gb', '0')
 // 'f#'
 ```
 
+### getChords(notes: string[]): {root: string, type: string}
 
+For a given array of `notes`, searches for matching `Chord`s
+
+```
+getChords(['c', 'g', 'e'])
+// [{root: 'c', type: 'maj}]
+```
 

@@ -7,15 +7,15 @@ export type IntervalList = number[];
 export type IntervalMap = Record<string, IntervalList>;
 
 export const KEY_INTERVALS: IntervalMap = {
-  maj: [2, 2, 1, 2, 2, 2],
-  min: [2, 1, 2, 2, 1, 2],
-  harmMin: [2, 1, 2, 2, 1, 3],
-  melMin: [2, 1, 2, 2, 2, 2],
-  wholeTone: [2, 2, 2, 2, 2],
-  pentMaj: [2, 2, 3, 2],
-  pentMin: [3, 2, 2, 3],
-  oct1: [1, 2, 1, 2, 1, 2],
-  oct2: [2, 1, 2, 1, 2, 1, 2],
+  maj: [2, 4, 5, 7, 9, 11],
+  min: [2, 3, 5, 7, 8, 10],
+  harmMin: [2, 3, 5, 7, 8, 11],
+  melMin: [2, 3, 5, 7, 9, 11],
+  wholeTone: [2, 4, 6, 8, 10],
+  pentMaj: [2, 4, 7, 9],
+  pentMin: [3, 5, 7, 10],
+  oct1: [1, 3, 4, 6, 7, 9],
+  oct2: [2, 3, 5, 6, 8, 9, 11],
 };
 
 export const CHORD_INTERVALS: IntervalMap = {

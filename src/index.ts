@@ -46,7 +46,6 @@ export function getInterval(rootNote: string, intervalNote: string) {
   return interval;
 }
 
-// TODO: can this return multiple?
 export function getChords(notes: string[]) {
   if (notes.length <= 1) {
     return;
@@ -112,15 +111,17 @@ export function getUniqueNotes(tabData: TabData): string[] {
 // 'a min': ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 function buildKeyMap(): Record<string, string[]> {
   return ALL_NOTES.reduce<Record<string, string[]>>(
-    (keyMap, note) => {
+    (keyMap, rootNote) => {
       Object.entries(KEY_INTERVALS).forEach(([keyType, intervals]) => {
-        const keyName = `${note} ${keyType}`;
-        const keyNotes = [note];
-        let nextInterval = 0;
-        intervals.forEach(interval => {
-          nextInterval += interval;
-          keyNotes.push(getNote(note, `${nextInterval}`));
-        });
+        const keyName = `${rootNote} ${keyType}`;
+        const keyNotes = intervals.reduce(
+          (acc, interval) => {
+            acc.push(getNote(rootNote, `${interval}`));
+            return acc;
+          },
+          [rootNote]
+        );
+
         keyMap[keyName] = keyNotes;
       });
       return keyMap;
