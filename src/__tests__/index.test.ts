@@ -1,4 +1,4 @@
-import { getNote, validateTabData } from '../';
+import { getNote, getUniqueNotes, validateTabData } from '../';
 
 describe('getNote', () => {
   it('gets open string', () => {
@@ -76,5 +76,21 @@ describe('validateTabData', () => {
         data: [...mockTabData.data.slice(1), ['', '', '', '', '']],
       })
     ).toBe(false);
+  });
+});
+
+describe('getUniqueNotes', () => {
+  const mockTabData = {
+    tuning: ['g', 'd', 'a', 'e'],
+    data: [
+      ['2', '', '1', ''],
+      ['3', '', '2', ''],
+      ['3', '', '2', ''],
+      ['1', '', '0', ''],
+    ],
+  };
+
+  it('returns unique notes for tab data', () => {
+    expect(getUniqueNotes(mockTabData)).toStrictEqual(['a', 'b', 'c', 'e', 'f', 'g#']);
   });
 });

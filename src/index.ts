@@ -30,10 +30,28 @@ export function validateTabData(tabData: TabData) {
     allArraysAreSameLength(tabData.data);
 }
 
-function allArraysAreSameLength(arrays: any[][]) {
+function allArraysAreSameLength(arrays: string[][]) {
   if (arrays.length === 1) return true;
 
   const firstArrayLength = arrays[0].length;
   const hasNonMatchingArrayLength = arrays.slice(1).some(a => a.length !== firstArrayLength)
   return !hasNonMatchingArrayLength;
+}
+
+export function getUniqueNotes(tabData: TabData): string[] {
+	return tabData.data.reduce<string[]>((bigAcc, string, i) => {
+		const rootNote = tabData.tuning[i];
+		return bigAcc.concat(string.reduce<string[]>((lilAcc, fret) => {
+			if (fret) {
+				const note = getNote(rootNote, fret);
+				if (note) {
+					lilAcc.push(note);
+				}
+			}
+
+			return lilAcc;
+		}, []));
+	}, [])
+		.filter((note, i, arr) => arr.indexOf(note) === i)
+		.sort();
 }
