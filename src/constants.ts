@@ -19,14 +19,16 @@ export const KEY_INTERVALS: IntervalMap = {
 };
 
 export const CHORD_INTERVALS: IntervalMap = {
+  M3: [4],
+  m3: [3],
   maj: [4, 7],
-  min2: [3],
-  maj2: [4],
   min: [3, 7],
+  maj2: [2, 4, 7],
+  min2: [2, 3, 7],
   maj7: [4, 7, 11],
   min7: [3, 7, 10],
   p5: [7],
-  sus2: [3, 7],
+  sus2: [2, 7],
   sus4: [5, 7],
 };
 
