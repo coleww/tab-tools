@@ -107,3 +107,10 @@ function buildReverseKeyLookup(
 
 export const keyMap = buildKeyMap();
 export const keyLookup = buildReverseKeyLookup(keyMap);
+
+export function getPossibleKeys(tabData: TabData) {
+  const tabNotes = getUniqueNotes(tabData);
+  return Object.keys(keyMap).filter(key => {
+    return tabNotes.every(note => keyMap[key].includes(note));
+  });
+}

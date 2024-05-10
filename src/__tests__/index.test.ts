@@ -1,10 +1,21 @@
 import {
   getNote,
+  getPossibleKeys,
   getUniqueNotes,
   keyLookup,
   keyMap,
   validateTabData,
 } from '../';
+
+const mockTabData = {
+  tuning: ['g', 'd', 'a', 'e'],
+  data: [
+    ['2', '', '0', ''],
+    ['3', '', '2', ''],
+    ['3', '', '2', ''],
+    ['1', '', '0', ''],
+  ],
+};
 
 describe('getNote', () => {
   it('gets open string', () => {
@@ -43,16 +54,6 @@ describe('getNote', () => {
 });
 
 describe('validateTabData', () => {
-  const mockTabData = {
-    tuning: ['g', 'd', 'a', 'e'],
-    data: [
-      ['2', '', '1', ''],
-      ['3', '', '2', ''],
-      ['3', '', '2', ''],
-      ['1', '', '0', ''],
-    ],
-  };
-
   it('returns true for valid data', () => {
     expect(validateTabData(mockTabData)).toBe(true);
   });
@@ -86,16 +87,6 @@ describe('validateTabData', () => {
 });
 
 describe('getUniqueNotes', () => {
-  const mockTabData = {
-    tuning: ['g', 'd', 'a', 'e'],
-    data: [
-      ['2', '', '1', ''],
-      ['3', '', '2', ''],
-      ['3', '', '2', ''],
-      ['1', '', '0', ''],
-    ],
-  };
-
   it('returns unique notes for tab data', () => {
     expect(getUniqueNotes(mockTabData)).toStrictEqual([
       'a',
@@ -103,7 +94,7 @@ describe('getUniqueNotes', () => {
       'c',
       'e',
       'f',
-      'g#',
+      'g',
     ]);
   });
 });
@@ -125,5 +116,15 @@ describe('keyLookup', () => {
 
   it('matches snapshot', () => {
     expect(keyLookup).toMatchSnapshot();
+  });
+});
+
+describe('getPossibleKeys', () => {
+  it('gets keys that contain all the notes in the tab data', () => {
+    expect(getPossibleKeys(mockTabData)).toStrictEqual([
+      'chromatic',
+      'a min',
+      'c maj',
+    ]);
   });
 });

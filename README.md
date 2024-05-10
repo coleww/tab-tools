@@ -28,6 +28,28 @@ type TabData = {
 }
 ```
 
+#### validataTabData(tabData: TabData): boolean
+
+Checks that `tuning` and `data` are both present, that `tuning` has the same length as `data`, and that all string arrays in `data` have the same length 
+
+#### getUniqueNotes(tabData: TabData): string[]
+
+Returns a sorted array of all the notes in a given tabData.
+
+```
+['a', 'b', 'c', 'd', 'e', 'f#', 'g']
+```
+
+#### getPossibleKeys(tabData: TabData): string[]
+
+Returns a list of keys that contain all the notes in the tabData.
+
+```
+['chromatic', 'a min', 'c maj']
+```
+
+### Intervals 
+
 ### getNote(rootNote: string, fret: string): string
 
 For a given `rootNote` (i.e, 'a', 'c', 'g#') for a string and a `fret` (i.e, '0', '5', '12'), returns the note at that fret.
@@ -43,11 +65,5 @@ getNote('Gb', 0)
 // 'f#'
 ```
 
-### validataTabData(tabData: TabData): boolean
 
-Checks that `tuning` and `data` are both present, that `tuning` has the same length as `data`, and that all string arrays in `data` have the same length 
-
-### getUniqueNotes(tabData: TabData): string[]
-
-Returns a sorted array of all the notes in a given tabData
 
