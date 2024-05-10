@@ -1,4 +1,5 @@
 import {
+  getInterval,
   getNote,
   getPossibleKeys,
   getUniqueNotes,
@@ -50,6 +51,16 @@ describe('getNote', () => {
 
   it('ignores bad root notes', () => {
     expect(getNote('z', '0')).toBe('');
+  });
+});
+
+describe('getInterval', () => {
+  it('gets interval between notes', () => {
+    expect(getInterval('g', 'a')).toBe(2);
+  });
+
+  it('gets unison', () => {
+    expect(getInterval('g', 'g')).toBe(0);
   });
 });
 

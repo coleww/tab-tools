@@ -30,6 +30,20 @@ export function getNote(rootNote: string, fret: string) {
   return ALL_NOTES[rootIndex + targetFret];
 }
 
+export function getInterval(rootNote: string, intervalNote: string) {
+  const rootIndex = ALL_NOTES.indexOf(rootNote);
+  const allNotesStartingWithRoot = [
+    ...ALL_NOTES.slice(rootIndex),
+    ...ALL_NOTES.slice(0, rootIndex),
+  ];
+  const interval = allNotesStartingWithRoot.indexOf(intervalNote);
+  if (rootIndex === -1 || interval === -1) {
+    return 0;
+  }
+
+  return interval;
+}
+
 export function validateTabData(tabData: TabData) {
   return (
     tabData.tuning.length &&
