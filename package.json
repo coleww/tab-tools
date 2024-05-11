@@ -5,8 +5,9 @@
   "files": [
     "lib"
   ],
-  "main": "lib/key",
-  "types": "lib/key.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc --build",
     "lint": "eslint --fix --ext .ts",
