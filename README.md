@@ -3,8 +3,7 @@ tab-tools
 
 Utilities for working with guitar tabs.
 
-
-## API
+## Types
 
 ### TabData
 
@@ -21,7 +20,7 @@ type TabData = {
 {
   tuning: ['g', 'd', 'a', 'e'],
   data: [
-    ['2', '', '1', ''],
+    ['2', '', '0', ''],
     ['3', '', '2', ''],
     ['3', '', '2', ''],
     ['1', '', '0', ''],
@@ -29,7 +28,33 @@ type TabData = {
 }
 ```
 
-See also [tab-parser](https://github.com/coleww/tab-parser/tree/main) for converting guitar tablature to/from this format.
+## API
+
+### Parse
+
+#### parseTab(tabStrings: string[]): TabData
+
+Takes an array of guitar tab strings representing a single "riff" and attempts to parse it into `TabData`
+
+```js
+parseTab([
+  'G|-2-0-|',
+  'D|-3-2-|',
+  'A|-3-2-|',
+  'E|-1-0-|',
+])
+// {
+//   tuning: ['g', 'd', 'a', 'e'],
+//   data: [
+//     ['2', '', '0', ''],
+//     ['3', '', '2', ''],
+//     ['3', '', '2', ''],
+//     ['1', '', '0', ''],
+//   ],
+// }
+```
+
+### Analysis
 
 #### validataTabData(tabData: TabData): boolean
 
@@ -39,27 +64,60 @@ Checks that `tuning` and `data` are both present, that `tuning` has the same len
 
 Returns a sorted array of all the notes in the tabData.
 
-```
-// ['a', 'b', 'c', 'd', 'e', 'f#', 'g']
+```js
+getUniqueNotes({
+  tuning: ['g', 'd', 'a', 'e'],
+  data: [
+    ['2', '', '0', ''],
+    ['3', '', '2', ''],
+    ['3', '', '2', ''],
+    ['1', '', '0', ''],
+  ],
+})
+// ['a', 'b', 'c', 'e', 'f', 'g']
 ```
 
 #### getPossibleKeys(tabData: TabData): string[]
 
 Returns a list of keys that contain all the notes in the tabData.
 
-```
+```js
+getPossibleKeys({
+  tuning: ['g', 'd', 'a', 'e'],
+  data: [
+    ['2', '', '0', ''],
+    ['3', '', '2', ''],
+    ['3', '', '2', ''],
+    ['1', '', '0', ''],
+  ],
+})
 // ['chromatic', 'a min', 'c maj']
 ```
 
-### Intervals 
+#### getTabChords(tabData: TabData): string[]
 
-### getNote(rootNote: string, fret: string): string
+Iterates over tab data and detects possible chords on each "beat"
 
-For a given `rootNote` (i.e, 'a', 'c', 'g#') for a string and a `fret` (i.e, '0', '5', '12'), returns the note at that fret.
+```js
+getTabChords({
+  tuning: ['g', 'd', 'a', 'e'],
+  data: [
+    ['2', '', '0', ''],
+    ['3', '', '2', ''],
+    ['3', '', '2', ''],
+    ['1', '', '0', ''],
+  ],
+})
+// [[{root: 'f', type: 'maj'}], [], [{root: 'e', type: 'min'}], []]
+```
+
+#### getNote(rootNote: string, fret: string): string
+
+For a given `rootNote` (i.e, 'a', 'c', 'g#') of a string and a `fret` (i.e, '0', '5', '12'), returns the note at that fret.
 
 Note: Will return values using lowercased sharps (`#`) even if input uses upper case and flats (`b`).
 
-```
+```js
 getNote('a', '3')
 // 'c'
 getNote('e', '13')
@@ -68,11 +126,11 @@ getNote('Gb', '0')
 // 'f#'
 ```
 
-### getChords(notes: string[]): {root: string, type: string}
+#### getChords(notes: string[]): {root: string, type: string}[]
 
-For a given array of `notes`, searches for matching `Chord`s
+For a given array of `notes`, searches for potential matching `Chord`s
 
-```
+```js
 getChords(['c', 'g', 'e'])
 // [{root: 'c', type: 'maj}]
 ```
