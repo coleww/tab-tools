@@ -41,3 +41,13 @@ export const smellsLikeParsed = {
 };
 
 export const standardTuning = ['e', 'B', 'G', 'D', 'A', 'E'];
+
+export const mockTabData = {
+  tuning: ['g', 'd', 'a', 'e'],
+  data: [
+    ['2', '', '0', ''],
+    ['3', '', '2', ''],
+    ['3', '', '2', ''],
+    ['1', '', '0', ''],
+  ],
+};

@@ -1,4 +1,4 @@
-import { validateTabData } from '.';
+import { validateTabData } from './validate';
 import type { TabData } from './constants';
 
 export function createTab(tabData: TabData): string[] {
