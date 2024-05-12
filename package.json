@@ -3,18 +3,48 @@
   "version": "1.0.0",
   "description": "utilities for working with guitar tablature",
   "files": [
-    "lib"
-  ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "type": "module",
-  "scripts": {
-    "build": "tsc --build",
-    "lint": "eslint --fix --ext .ts",
-    "prettier": "npx prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,md}'",
-    "test": "jest"
+    "dist"
+  ], 
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "author": "",
+  "scripts": {
+    "build": "npm run lib:build && npm run demo:build",
+    "watch": "npm run build -- --watch src,public",
+    "prepublishOnly": "npm run lib:build",
+    "lib:build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "demo:build": "tsup public/index.ts --format cjs --outDir public --platform browser",
+    "demo:serve": "http-server ./public",
+    "demo:deploy": "gh-pages -d public",
+    "lint": "eslint --fix --ext .ts",
+    "test": "jest --watch"
+  },
+  "keywords": [
+    "guitar",
+    "guitar tabs",
+    "tablature",
+    "music"
+  ],
+  "bugs": {
+    "url": "https://github.com/coleww/tab-tools/issues"
+  },
+  "homepage": "https://github.com/coleww/tab-tools#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coleww/tab-tools.git"
+  },
+  "author": {
+    "name": "Cole Willsea",
+    "email": "coleww@users.noreply.github.com",
+    "url": "https://github.com/coleww"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.11",
@@ -24,10 +54,11 @@
     "eslint": "^8.56.0",
     "eslint-config-xo": "^0.43.1",
     "eslint-config-xo-typescript": "^1.0.1",
+    "gh-pages": "^6.1.1",
+    "http-server": "^14.1.1",
     "jest": "^29.7.0",
-    "prettier": "^3.2.5",
+    "json-nice": "^1.1.0",
     "ts-jest": "^29.1.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "tsup": "^8.0.2"
   }
 }
