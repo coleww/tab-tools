@@ -1,36 +1,15 @@
-import { ALL_NOTES, KEY_INTERVALS, TabData } from './constants';
+import { ALL_KEYS, KEY_MAP, type TabData } from './constants';
 import { getNote } from './note';
 
-// 'a min': ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-function buildKeyMap(): Record<string, string[]> {
-  return ALL_NOTES.reduce<Record<string, string[]>>(
-    (keyMap, rootNote) => {
-      Object.entries(KEY_INTERVALS).forEach(([keyType, intervals]) => {
-        const keyName = `${rootNote} ${keyType}`;
-        const keyNotes = intervals.reduce(
-          (acc, interval) => {
-            acc.push(getNote(rootNote, `${interval}`));
-            return acc;
-          },
-          [rootNote]
-        );
 
-        keyMap[keyName] = keyNotes;
-      });
-      return keyMap;
-    },
-    { chromatic: ALL_NOTES }
-  );
-}
-
-export const keyMap = buildKeyMap();
 
 export function getPossibleKeys(tabData: TabData) {
   const tabNotes = getUniqueNotes(tabData);
-  return Object.keys(keyMap).filter(key => {
-    return tabNotes.every(note => keyMap[key]?.includes(note));
+  return ALL_KEYS.filter(key => {
+    return tabNotes.every(note => KEY_MAP[key]?.includes(note));
   });
 }
+
 
 export function getUniqueNotes(tabData: TabData): string[] {
   return tabData.data

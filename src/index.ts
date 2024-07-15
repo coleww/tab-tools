@@ -4,4 +4,4 @@ export { parseTab } from './parse';
 export { getPossibleKeys, getUniqueNotes } from './key';
 export { createTab } from './create';
 export { getInterval, getChords, getTabChords } from './chord';
-export { ALL_NOTES, KEY_INTERVALS, CHORD_INTERVALS } from './constants';
+export { ALL_KEYS, ALL_NOTES, KEY_INTERVALS, KEY_MAP, CHORD_INTERVALS, type TabData } from './constants';
