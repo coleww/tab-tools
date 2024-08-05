@@ -1,15 +1,14 @@
 import { ALL_KEYS, KEY_MAP, type TabData } from './constants';
 import { getNote } from './note';
 
-
-
-export function getPossibleKeys(tabData: TabData) {
-  const tabNotes = getUniqueNotes(tabData);
+export function getPossibleKeys(...tabData: TabData[]) {
+  const tabNotes = tabData.reduce<string[]>((acc, data) => {
+    return acc.concat(getUniqueNotes(data));
+  }, []);
   return ALL_KEYS.filter(key => {
     return tabNotes.every(note => KEY_MAP[key]?.includes(note));
   });
 }
-
 
 export function getUniqueNotes(tabData: TabData): string[] {
   return tabData.data

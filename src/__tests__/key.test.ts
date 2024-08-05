@@ -1,6 +1,6 @@
 import { mockTabData } from './fixtures';
-import { getUniqueNotes, keyMap, getPossibleKeys } from '../key';
-
+import { getUniqueNotes, getPossibleKeys } from '../key';
+import { KEY_MAP } from '../constants';
 describe('getUniqueNotes', () => {
   it('returns unique notes for tab data', () => {
     expect(getUniqueNotes(mockTabData)).toStrictEqual([
@@ -12,15 +12,16 @@ describe('getUniqueNotes', () => {
       'g',
     ]);
   });
+
 });
 
 describe('keyMap', () => {
   it('maps keys to note values', () => {
-    expect(keyMap['a min']).toStrictEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+    expect(KEY_MAP['a min']).toStrictEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
   });
 
   it('matches snapshot', () => {
-    expect(keyMap).toMatchSnapshot();
+    expect(KEY_MAP).toMatchSnapshot();
   });
 });
 
@@ -32,4 +33,18 @@ describe('getPossibleKeys', () => {
       'c maj',
     ]);
   });
+
+  it('handles variadic input', () => {
+    expect(getPossibleKeys({
+      ...mockTabData,
+      tuning: ['a', 'c', 'c', 'b']
+    }, 
+    {
+      ...mockTabData,
+      tuning: ['g', 'c', 'c', 'b']
+    })).toStrictEqual([
+      'chromatic',
+      'c melMin',
+    ]);
+  })
 });
