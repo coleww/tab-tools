@@ -7,7 +7,7 @@ export function parseTab(strings: string[]): TabData[] {
       // TODO: research tabs, does this suffice to detect strings vs. notes?
       if (string.includes('--')) {
         isRiff = true;
-        arr[arr.length - 1].push(string);
+        arr[arr.length - 1].push(string.trim());
       } else {
         // TODO: handle top/bottom notes
         if (isRiff) {
