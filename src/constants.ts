@@ -29,7 +29,7 @@ export const CHORD_INTERVALS: IntervalMap = {
   min2: [2, 3, 7],
   maj7: [4, 7, 11],
   min7: [3, 7, 10],
-  p5: [7],
+  5: [7],
   sus2: [2, 7],
   sus4: [5, 7],
 };

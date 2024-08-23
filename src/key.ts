@@ -24,7 +24,7 @@ export const KEY_MAP = ALL_NOTES.reduce<Record<string, string[]>>(
 
 export const ALL_KEYS = Object.keys(KEY_MAP);
 
-export function getPossibleKeys(...tabData: TabData[]) {
+export function getPossibleKeys(tabData: TabData[]) {
   const tabNotes = tabData.reduce<string[]>((acc, data) => {
     return acc.concat(getUniqueNotes(data));
   }, []);

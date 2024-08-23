@@ -33,11 +33,11 @@ type TabData = {
 
 #### parseTab(tabStrings: string[]): TabData
 
-Takes an array of guitar tab strings representing a single "riff" and attempts to parse it into `TabData`
+Takes an array of guitar tab strings representing a single "riff" and attempts to parse it into `TabData`s
 
 ```js
-parseTab(['G|-2-0-|', 'D|-3-2-|', 'A|-3-2-|', 'E|-1-0-|']);
-// {
+parseTab(['bass', 'G|-2-0-|', 'D|-3-2-| x2', 'A|-3-2-|', 'E|-1-0-|']);
+// [{
 //   tuning: ['g', 'd', 'a', 'e'],
 //   data: [
 //     ['2', '', '0', ''],
@@ -45,7 +45,7 @@ parseTab(['G|-2-0-|', 'D|-3-2-|', 'A|-3-2-|', 'E|-1-0-|']);
 //     ['3', '', '2', ''],
 //     ['1', '', '0', ''],
 //   ],
-// }
+// }]
 ```
 
 ### Analysis

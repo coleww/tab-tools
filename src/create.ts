@@ -1,6 +1,8 @@
 import { validateTabData } from './validate';
 import type { TabData } from './constants';
 
+// TODO: needs to handle notes
+// TODO: optionally add chord analysis?
 export function createTab(tabData: TabData): string[] {
   if (!validateTabData(tabData)) {
     return [];

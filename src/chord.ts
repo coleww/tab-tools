@@ -15,9 +15,12 @@ export function getInterval(rootNote: string, intervalNote: string) {
   return interval;
 }
 
-export function getChords(notes: string[]) {
-  if (notes.length <= 1) {
+export function getChords(notes: string[]): Chord[] {
+  if (notes.length < 1) {
     return [];
+  }
+  if (notes.length === 1) {
+    return [{ root: notes[0], type: '' }];
   }
   return notes
     .sort()
