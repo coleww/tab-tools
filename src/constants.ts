@@ -65,25 +65,3 @@ export type Chord = {
   root: Note;
   type: ChordType;
 };
-
-// 'a min': ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-export const KEY_MAP = ALL_NOTES.reduce<Record<string, string[]>>(
-  (keyMap, rootNote) => {
-    Object.entries(KEY_INTERVALS).forEach(([keyType, intervals]) => {
-      const keyName = `${rootNote} ${keyType}`;
-      const keyNotes = intervals.reduce(
-        (acc, interval) => {
-          acc.push(getNote(rootNote, `${interval}`));
-          return acc;
-        },
-        [rootNote]
-      );
-
-      keyMap[keyName] = keyNotes;
-    });
-    return keyMap;
-  },
-  { chromatic: ALL_NOTES }
-);
-
-export const ALL_KEYS = Object.keys(KEY_MAP);

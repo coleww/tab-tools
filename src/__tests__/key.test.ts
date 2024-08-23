@@ -1,6 +1,6 @@
 import { mockTabData } from './fixtures';
 import { getUniqueNotes, getPossibleKeys } from '../key';
-import { KEY_MAP } from '../constants';
+import { KEY_MAP } from '../key';
 describe('getUniqueNotes', () => {
   it('returns unique notes for tab data', () => {
     expect(getUniqueNotes(mockTabData)).toStrictEqual([
