@@ -1,13 +1,35 @@
 import type { TabData } from './constants';
 
-export function parseTab(strings: string[]): TabData {
-  const cleanedStrings = strings.map(string => string.trim()).filter(x => !!x);
+export function parseTab(strings: string[]): TabData[] {
+  let isRiff = false;
+  const riffs = strings.reduce(
+    (arr, string) => {
+      // TODO: research tabs, does this suffice to detect strings vs. notes?
+      if (string.includes('--')) {
+        isRiff = true;
+        arr[arr.length - 1].push(string);
+      } else {
+        // TODO: handle top/bottom notes
+        if (isRiff) {
+          isRiff = false;
+          arr.push([]);
+        }
+      }
 
-  // Tab might have random text at the end of a string (`x4`, `repeat`, lyrics, etc.)
-  const len = Math.min(...cleanedStrings.map(string => string.length));
+      return arr;
+    },
+    <string[][]>[[]]
+  );
+
+  return riffs.filter(riff => riff.length).map(riff => parseRiff(riff));
+}
+
+export function parseRiff(strings: string[]): TabData {
+  // TODO: collect side notes at end of strings
+  const len = Math.min(...strings.map(string => string.length));
 
   let tuning: string[] | undefined;
-  const data: string[][] = cleanedStrings.map(() => []);
+  const data: string[][] = strings.map(() => []);
 
   let i = 0;
   while (i < len) {
@@ -15,20 +37,18 @@ export function parseTab(strings: string[]): TabData {
     const [currentI, nextI] = [i, i + 1];
 
     // Always look 1 step ahead, frets can be 1 or 2 digits
-    const currentStrings = cleanedStrings.map(
+    const currentStrings = strings.map(
       string => `${string[currentI]}${string[nextI]}`
     );
 
-    // Assume the tuning is within the first 5 chars
-    if (!tuning && i < 5) {
+    // Assume the tuning is within the first 3 chars
+    if (!tuning && i < 3) {
       tuning = getTuning(currentStrings);
       if (tuning) {
         i += 2;
         continue;
       }
     }
-
-    // TODO: maybe break if we ever detect whitespace?
 
     if (allStringsAreDoubleBlank(currentStrings)) {
       data.forEach(s => s.push(''));
@@ -73,7 +93,7 @@ export function getNote(string: string): string | undefined {
 }
 
 export function removeBlankSpaces(string: string): string {
-  return string.replace(/-/g, '');
+  return string.replace(/(-|\|)/g, '');
 }
 
 export function allStringsAreDoubleBlank(strings: string[]): boolean {

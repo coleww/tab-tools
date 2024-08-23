@@ -5,6 +5,7 @@ import {
   getNote,
   getTuning,
   removeBlankSpaces,
+  parseRiff,
   parseTab,
 } from '../parse';
 
@@ -12,42 +13,35 @@ import {
   smellsLikeData,
   smellsLikeParsed,
   standardTuning,
+  puppetData,
+  puppetParsed,
   whatsMyData,
   whatsMyParsed,
 } from './fixtures';
 
 describe('tab-parser', () => {
   describe('parseTab', () => {
+    it('ignores blank/empty lines and splits into riffs', () => {
+      expect(parseTab(puppetData)).toStrictEqual(puppetParsed);
+    });
+
+    xit('collects header/footer/side notes', () => {});
+  });
+
+  describe('parseRiff', () => {
     it('parses double digit frets', () => {
-      expect(parseTab(whatsMyData)).toStrictEqual(whatsMyParsed);
+      expect(parseRiff(whatsMyData)).toStrictEqual(whatsMyParsed);
     });
 
     it('parses diacriticals and inserts blanks', () => {
-      expect(parseTab(smellsLikeData)).toStrictEqual(smellsLikeParsed);
-    });
-
-    it('ignores blank/empty lines', () => {
-      const tabWithBlankAndEmpty = ['', ...smellsLikeData, ' '];
-      expect(parseTab(tabWithBlankAndEmpty)).toStrictEqual(smellsLikeParsed);
+      expect(parseRiff(smellsLikeData)).toStrictEqual(smellsLikeParsed);
     });
 
     it('assumes standard if no tuning found', () => {
       const tabWithoutTuning = whatsMyData.map(s => s.slice(3));
-      const { tuning, data } = parseTab(tabWithoutTuning);
+      const { tuning, data } = parseRiff(tabWithoutTuning);
       expect(data).toStrictEqual(whatsMyParsed.data);
       expect(tuning).toStrictEqual(standardTuning);
-    });
-
-    // TODO: hmmmm...
-    // check if line has white space anywhere after trimming?
-    // is line filled with `-`?
-    xit('ignores random extra text', () => {
-      const tabWithBlankAndEmpty = [
-        'With the lights out...',
-        ...smellsLikeData,
-        'x4',
-      ];
-      expect(parseTab(tabWithBlankAndEmpty)).toStrictEqual(smellsLikeParsed);
     });
   });
 
