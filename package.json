@@ -4,7 +4,7 @@
   "description": "utilities for working with guitar tablature",
   "files": [
     "dist"
-  ], 
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -24,6 +24,7 @@
     "demo:serve": "http-server ./public",
     "demo:deploy": "gh-pages -d public",
     "lint": "eslint --fix --ext .ts",
+    "prettier": "prettier --write \"**/*.+(js|jsx|tsx|ts|json|css|md)\"",
     "test": "jest --watch"
   },
   "keywords": [
@@ -60,5 +61,8 @@
     "json-nice": "^1.1.0",
     "ts-jest": "^29.1.2",
     "tsup": "^8.0.2"
+  },
+  "dependencies": {
+    "prettier": "^3.3.3"
   }
 }

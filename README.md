@@ -1,5 +1,4 @@
-tab-tools
-------------
+## tab-tools
 
 Utilities for working with guitar tabs.
 
@@ -37,12 +36,7 @@ type TabData = {
 Takes an array of guitar tab strings representing a single "riff" and attempts to parse it into `TabData`
 
 ```js
-parseTab([
-  'G|-2-0-|',
-  'D|-3-2-|',
-  'A|-3-2-|',
-  'E|-1-0-|',
-])
+parseTab(['G|-2-0-|', 'D|-3-2-|', 'A|-3-2-|', 'E|-1-0-|']);
 // {
 //   tuning: ['g', 'd', 'a', 'e'],
 //   data: [
@@ -58,7 +52,7 @@ parseTab([
 
 #### validataTabData(tabData: TabData): boolean
 
-Checks that `tuning` and `data` are both present, that `tuning` has the same length as `data`, and that all string arrays in `data` have the same length 
+Checks that `tuning` and `data` are both present, that `tuning` has the same length as `data`, and that all string arrays in `data` have the same length
 
 #### getUniqueNotes(tabData: TabData): string[]
 
@@ -73,7 +67,7 @@ getUniqueNotes({
     ['3', '', '2', ''],
     ['1', '', '0', ''],
   ],
-})
+});
 // ['a', 'b', 'c', 'e', 'f', 'g']
 ```
 
@@ -90,7 +84,7 @@ getPossibleKeys({
     ['3', '', '2', ''],
     ['1', '', '0', ''],
   ],
-})
+});
 // ['chromatic', 'a min', 'c maj']
 ```
 
@@ -107,7 +101,7 @@ getTabChords({
     ['3', '', '2', ''],
     ['1', '', '0', ''],
   ],
-})
+});
 // [[{root: 'f', type: 'maj'}], [], [{root: 'e', type: 'min'}], []]
 ```
 
@@ -118,11 +112,11 @@ For a given `rootNote` (i.e, 'a', 'c', 'g#') of a string and a `fret` (i.e, '0',
 Note: Will return values using lowercased sharps (`#`) even if input uses upper case and flats (`b`).
 
 ```js
-getNote('a', '3')
+getNote('a', '3');
 // 'c'
-getNote('e', '13')
+getNote('e', '13');
 // 'f'
-getNote('Gb', '0')
+getNote('Gb', '0');
 // 'f#'
 ```
 
@@ -131,7 +125,6 @@ getNote('Gb', '0')
 For a given array of `notes`, searches for potential matching `Chord`s
 
 ```js
-getChords(['c', 'g', 'e'])
+getChords(['c', 'g', 'e']);
 // [{root: 'c', type: 'maj}]
 ```
-

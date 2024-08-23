@@ -1,7 +1,6 @@
 import { ALL_NOTES, KEY_INTERVALS, type TabData } from './constants';
 import { getNote } from './note';
 
-
 // 'a min': ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 
 export const KEY_MAP = ALL_NOTES.reduce<Record<string, string[]>>(

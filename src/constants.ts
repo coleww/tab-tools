@@ -1,4 +1,4 @@
-import { getNote } from "./note";
+import { getNote } from './note';
 
 export type TabData = {
   tuning: string[];

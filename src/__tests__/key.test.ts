@@ -12,7 +12,6 @@ describe('getUniqueNotes', () => {
       'g',
     ]);
   });
-
 });
 
 describe('keyMap', () => {
@@ -35,16 +34,17 @@ describe('getPossibleKeys', () => {
   });
 
   it('handles variadic input', () => {
-    expect(getPossibleKeys({
-      ...mockTabData,
-      tuning: ['a', 'c', 'c', 'b']
-    }, 
-    {
-      ...mockTabData,
-      tuning: ['g', 'c', 'c', 'b']
-    })).toStrictEqual([
-      'chromatic',
-      'c melMin',
-    ]);
-  })
+    expect(
+      getPossibleKeys(
+        {
+          ...mockTabData,
+          tuning: ['a', 'c', 'c', 'b'],
+        },
+        {
+          ...mockTabData,
+          tuning: ['g', 'c', 'c', 'b'],
+        }
+      )
+    ).toStrictEqual(['chromatic', 'c melMin']);
+  });
 });
