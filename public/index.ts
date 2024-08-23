@@ -1,4 +1,4 @@
-import { getPossibleKeys, getTabChords, parseTab, createTab } from '../dist';
+import { getTabChords, getPossibleKeys, parseTab, createTab } from '../dist';
 import format from 'json-nice';
 
 document.body.addEventListener('paste', function (e) {
@@ -10,12 +10,15 @@ document.body.addEventListener('paste', function (e) {
   try {
     const data = e.clipboardData?.getData('text/plain')?.split('\n') || [];
     const tabData = parseTab(data);
-    const fmtTab = createTab(tabData);
-    const key = `Possibly keys: ${getPossibleKeys(tabData)}`;
-    const fmtJson =
-      format(tabData, { indent: ' ' }).split('\n   ').join(' ') || '';
+    const fmtTab = tabData.map(data => createTab(data).join('\n'));
+    const key = `Possible keys: ${getPossibleKeys(tabData)}`;
+    const fmtChords = tabData.map(data =>
+      getTabChords(data).map(chord => chord[0].root)
+    );
+    const fmtJson = format(tabData, { indent: ' ' }); //.split('\n   ').join(' ') || '';
 
-    const result = [...fmtTab, key, fmtJson].join('\n');
+    const result = [...fmtTab, fmtChords, key, fmtJson].join('\n');
+
     output.textContent = result;
   } catch (e) {
     output.textContent = e;
